@@ -12,13 +12,12 @@ create table bunny_character (
     
 create table episode (
   id integer not null auto_increment,
-  episode_no integer not null,
-  little_brothers bit not null,
-  max_word varchar(255),
-  other_max_words text,
-  plot text,
-  season integer not null,
-  segment char(1),
+  episode_no integer,
+  little_brothers bit,
+  plot varchar(255),
+  season integer,
+  segment varchar(255),
+  title varchar(255),
   primary key (id)
 ) engine=InnoDB;
 
@@ -26,6 +25,20 @@ create table appearance (
   character_id integer not null,
   episode_id integer not null,
   foreign key (character_id) references bunny_character (id),
+  foreign key (episode_id) references episode (id)
+) engine=InnoDB;
+
+create table max_words (
+  id integer not null auto_increment,
+  original_words varchar(255),
+  searchable_words varchar(255),
+  primary key (id)
+) engine=InnoDB;
+
+create table max_says (
+  episode_id integer not null,
+  max_words_id integer not null,
+  foreign key (max_words_id) references max_words (id),
   foreign key (episode_id) references episode (id)
 ) engine=InnoDB;
 
@@ -61,8 +74,9 @@ insert into bunny_character (name, bio) values
     'Ruby is a seven-year-old bunny who is Max\'s big sister. She has white fur. In seasons 1-2, she wears a yellow dress with a polka-dot ',
     'design of green and orange flowers and purple sleeves. In seasons 3-5, she wears a pink dress with a trio of daisies on her left side ',
     'and light pink sleeves. She is patient, well-behaved, organized, and responsible, but she can also be a bit closed-minded and somewhat ',
-    'of a perfectionist. No matter how mischievous Max can be, she always manages to keep her patience with him, but that\'s because she has ',
-    'to look over him as his big sister. Sometimes, when Max does something, she says \"Little brothers...\" with a sigh.\n',
+    'of a perfectionist, and she has the tendency to underestimate Max. No matter how mischievous Max can be, she always manages to keep her ',
+    'patience with him, but that\'s because she has to look over him as his big sister. Sometimes, when Max does something, she says ',
+    '\"Little brothers...\" with a sigh.\n',
     'Ruby is a member of the local Bunny Scouts of her hometown East Bunnyhop, where she is in a troop with her best friends, Louise, ',
     'Valerie, and Martha. Some episodes will focus on her trying to accomplish something in order to earn a Bunny Scout badge or for ',
     'personal reasons. In those episodes, she wouldn\'t have accomplished her goal without Max interfering in a surprising way.\n',
@@ -172,8 +186,9 @@ insert into bunny_character (name, bio) values
   concat(
     'Mrs. Huffington, also known as Mrs. H., is an adult bunny who is one of Max and Ruby\'s next-door neighbors and Grandma\'s friends. ',
     'She is Mr. Huffington\'s wife and Baby Huffington\'s mother. She has brown fur and wears a yellow shirt, a blue jacket with yellow ',
-    'flowers on it, a long purple skirt, and dark purple heels. She runs the perfume department inside the department store in the town ',
-    'center of East Bunnyhop. Later in the series, she becomes a co-leader of Ruby\'s Bunny Scout troop.'
+    'flowers on it, a long purple skirt, and dark purple heels. Back in high school, she was a cheerleader. She runs the perfume ',
+    'department inside the department store in the town center of East Bunnyhop. Later in the series, she becomes a co-leader of Ruby\'s ',
+    'Bunny Scout troop.'
   )
 ),
 (
@@ -229,13 +244,13 @@ insert into bunny_character (name, bio) values
   'Bunny Pavlova',
   concat(
     'Bunny Pavlova is a famous ballerina bunny. She has white fur, long arms, long legs, and long ears, typical of a professional ballerina, ',
-    'and wears a plum-sparkly violet leotard and tutu, violet gloves, violet Sugar Plum crown, and violet pointe shoes. She is most famous ',
-    'for her performances as the Sugar Plum Fairy, which Ruby says are the most beautiful ever. Ruby is her self-proclaimed number-one fan ',
-    'and she idolizes her.\n',
-    'A native of East Bunnyhop, Pavlova trained at Miss Rosalinda\'s Dancing Academy. Her old friends include Rosalinda (maybe she\' Miss ',
-    'Rosalinda the Dance Instructor, maybe not), and Mr. Piazza. She is known to have a sweet tooth. Her favorite candy is sour lemon drops, ',
-    'her favorite fruit is bananas, and she also enjoys pizza. When Ruby took Max to Katie\'s Diner to get pizza, they encountered her ',
-    'craving pizza there, which allowed Ruby to finally meet her, dance with her, and get her autograph.\n',
+    'and wears a plum-sparkly violet leotard and tutu, violet gloves, violet Sugar Plum crown, and violet pointe shoes. She normally walks ',
+    'while en pointe, a sign indicating that she is a ballerina 24/7. She is most famous for her performances as the Sugar Plum Fairy, which ',
+    'Ruby says are the most beautiful ever. Ruby is her self-proclaimed number-one fan and idolizes her.\n',
+    'A native of East Bunnyhop, Pavlova trained at Miss Rosalinda\'s Dancing Academy. Her old friends include Rosalinda (it is unknown if ',
+    'she is Miss Rosalinda the Dance Instructor), and Mr. Piazza. She is known to have a sweet tooth. Her favorite candy is sour lemon ',
+    'drops, her favorite fruit is bananas, and she also enjoys pizza. When Ruby took Max to Katie\'s Diner to get pizza, they encountered ',
+    'her craving pizza there, which allowed Ruby to finally meet her, dance with her, and get her autograph.\n',
     'Probably based on the legendary ballerina Anna Pavlova, Bunny Pavlova is most likely a principal dancer at a prestigious ballet company ',
     'located in a big city. The only big city known in the series is Bunningham, based on real world London. As London has the Royal Ballet, ',
     'Bunningham must have a company called the Royal Ballet of Bunningham, which is probably as prestigious as London\'s Royal Ballet. ',
@@ -265,6 +280,30 @@ insert into bunny_character (name, bio) values
   concat(
     'Uncle Nate is Max and Ruby\'s uncle who lives in Bunnyville, a town that is quite far away from East Bunnyhop. He has gray fur and a ',
     'mustache. He is Aunt Claire\'s husband. Max, Ruby, and Grandma took an overnight train to Bunnyville to visit him and Aunt Claire.'
+  )
+),
+(
+  'Santa Claus',
+  concat(
+    'Santa Claus is the being that spreads cheer during Christmas by delivering toys to children in their homes, under their Christmas trees ',
+    'and in their stockings, on the night of Christmas Eve while they sleep. In this series, he is a bunny with white fur and a mustache, ',
+    'along with his signature beard and red and white Santa outfit. His favorite beverage is chocolate milk, because it\'s different from ',
+    'the regular milk that most children leave him. He also enjoys the cookies that the children leave him as well.\n',
+    'One Christmas Eve, Santa encountered Max, who was awake and witnessed him leaving gifts under his and Ruby\'s tree and in their ',
+    'stockings, drinking the chocolate milk, and eating the cookies that Ruby left. He gives Max his Santa hat and also tells him that he ',
+    'should be in bed for the night and that no one should ever see him.\n',
+    '\"Why?\"\n',
+    '\"Because.\"'
+  )
+),
+(
+  'Easter Bunny',
+  concat(
+    'Easter Bunny is the bunny that quietly and discreetly sneaks around and leaves colorful Easter eggs for the children to hunt for during ',
+    'Easter. Whenever he hears children coming, he will hide. In this series, he has golden-orange fur, long legs like those of a kangaroo, ',
+    'and no pants. At Max and Ruby\'s house, he leaves a chocolate chicken in addition to the eggs. After Ruby finds all the eggs in their ',
+    'yard but Max eats the chocolate chicken by himself, he leaves a chocolate goose, which Max also ends up eating because he was seen ',
+    'breaking off the goose\'s tail.'
   )
 ),
 (

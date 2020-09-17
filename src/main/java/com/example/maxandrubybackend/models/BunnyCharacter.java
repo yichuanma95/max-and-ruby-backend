@@ -35,6 +35,19 @@ public class BunnyCharacter {
     this.bio = bio;
   }
 
+  public void set(BunnyCharacter newCharacter) {
+    if (newCharacter.name != null)
+      this.name = newCharacter.name;
+    if (newCharacter.bio != null)
+      this.bio = newCharacter.bio;
+  }
+
+  public void addEpisode(Episode episode) {
+    this.episodes.add(episode);
+    if (!episode.getCharacters().contains(this))
+      episode.getCharacters().add(this);
+  }
+
   public int getId() {
     return id;
   }
