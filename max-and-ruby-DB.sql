@@ -290,8 +290,8 @@ insert into bunny_character (name, bio) values
     'along with his signature beard and red and white Santa outfit. His favorite beverage is chocolate milk, because it\'s different from ',
     'the regular milk that most children leave him. He also enjoys the cookies that the children leave him as well.\n',
     'One Christmas Eve, Santa encountered Max, who was awake and witnessed him leaving gifts under his and Ruby\'s tree and in their ',
-    'stockings, drinking the chocolate milk, and eating the cookies that Ruby left. He gives Max his Santa hat and also tells him that he ',
-    'should be in bed for the night and that no one should ever see him.\n',
+    'stockings, drinking the chocolate milk, and eating the cookies that Ruby left. He gave Max his Santa hat and told him that he should ',
+    'be in bed for the night and that no one should ever see him.\n',
     '\"Why?\"\n',
     '\"Because.\"'
   )
