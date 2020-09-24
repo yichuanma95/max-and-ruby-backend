@@ -21,8 +21,17 @@ public class BunnyCharacterService {
     return characterRepository.findAllCharacters();
   }
 
-  public BunnyCharacter findCharacterById(int cid) {
-    return characterRepository.findCharacterById(cid);
+  public int updateCharacter(int cid, BunnyCharacter character) {
+    BunnyCharacter oldCharacter = characterRepository.findCharacterById(cid);
+    if (oldCharacter == null)
+      return 0;
+    oldCharacter.set(character);
+    characterRepository.save(oldCharacter);
+    return 1;
+  }
+
+  public BunnyCharacter findCharacterByName(String name) {
+    return characterRepository.findCharacterByName(name);
   }
 
   public boolean addCharacterToEpisode(int cid, int eid) {

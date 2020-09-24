@@ -14,4 +14,7 @@ public interface BunnyCharacterRepository extends CrudRepository<BunnyCharacter,
 
   @Query(value = "select c from BunnyCharacter c where c.id = :characterId")
   BunnyCharacter findCharacterById(@Param("characterId") Integer characterId);
+
+  @Query(value = "select c from BunnyCharacter c where c.name = :name")
+  BunnyCharacter findCharacterByName(@Param("name") String name);
 }

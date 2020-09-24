@@ -60,7 +60,9 @@ public class EpisodeController {
   }
 
   @PutMapping("/api/max-words")
-  public List<MaxWords> updateMaxWordsTable(@RequestBody List<MaxWords> words) {
+  public List<MaxWords> updateMaxWordsTable(HttpSession session, @RequestBody List<MaxWords> words) {
+    if (session.getAttribute("admin") == null)
+      return null;
     List<MaxWords> resultWords = new ArrayList<>();
     for (MaxWords word: words) {
       MaxWords foundWord = episodeService.getWordsByInput(word.getSearchableWords());
@@ -70,7 +72,13 @@ public class EpisodeController {
   }
 
   @PostMapping("/api/episodes/{eid}/max-words")
-  public int addMaxWordsToEpisode(@PathVariable("eid") int eid, @RequestBody List<Integer> mwids) {
+  public int addMaxWordsToEpisode(
+          HttpSession session,
+          @PathVariable("eid") int eid,
+          @RequestBody List<Integer> mwids
+  ) {
+    if (session.getAttribute("admin") == null)
+      return 0;
     for (int mwid: mwids) {
       episodeService.addMaxWordsToEpisode(mwid, eid);
     }

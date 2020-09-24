@@ -14,9 +14,9 @@ create table episode (
   id integer not null auto_increment,
   episode_no integer,
   little_brothers bit,
-  plot varchar(255),
+  plot text,
   season integer,
-  segment varchar(255),
+  segment char(1),
   title varchar(255),
   primary key (id)
 ) engine=InnoDB;
