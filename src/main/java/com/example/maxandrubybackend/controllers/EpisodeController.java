@@ -47,6 +47,11 @@ public class EpisodeController {
     session.invalidate();
   }
 
+  @PostMapping("/api/verify")
+  public boolean isLoggedIn(HttpSession session) {
+    return session.getAttribute("admin") != null;
+  }
+
   @PostMapping("/api/episodes")
   public Episode addEpisode(HttpSession session, @RequestBody Episode episode) {
     if (session.getAttribute("admin") == null)
